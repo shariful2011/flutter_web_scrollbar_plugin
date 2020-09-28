@@ -51,15 +51,14 @@ class FlutterWebScrollBar {
       default:
         throw PlatformException(
             code: 'Unimplemented',
-            details: "The flutter_web_scrollbar plugin for web doesn't implement "
+            details:
+                "The flutter_web_scrollbar plugin for web doesn't implement "
                 "the method '${call.method}'");
     }
   }
 }
 
-
 class FlutterWebScroller extends StatefulWidget {
-
   /// Required! CallBack function used to update the scrollable content with the new drag position
   final Function scrollCallBack;
 
@@ -130,6 +129,9 @@ class _FlutterWebScrollerState extends State<FlutterWebScroller> {
                     if (dragUpdate.globalPosition.dy >= 0) {
                       /// Update the offset of the drag handle to push it down or shift it up
                       _offset = dragUpdate.globalPosition.dy;
+                      double maxHeight = MediaQuery.of(context).size.height -
+                          widget.dragHandleHeight;
+                      _offset = _offset > maxHeight ? maxHeight : _offset;
                     }
                   });
                 },
